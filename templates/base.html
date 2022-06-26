@@ -17,9 +17,11 @@
             <img src="/My_Music_App/static/images/headphones.png" alt="headphones">
             <a href="{% url 'home_page' %}">Home</a><ul></ul>
             <ul>
-                <!--Only for user with created profile-->
+                {% if not_user %}
+                {% else %}
                 <li><a href="{% url 'add_album' %}">Create Album</a></li>
                 <li><a href="{% url 'profile_details' %}">Profile</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

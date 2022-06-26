@@ -32,7 +32,7 @@ def home_page(request):
             form = ProfileForm()
         context = {
             'form': form,
-            # 'not_user': True,
+            'not_user': True,
         }
         return render(request, 'home-no-profile.html', context)
 
@@ -118,6 +118,11 @@ def edit_profile(request):
 def delete_profile(request):
     profile = get_profile()
     if request.method == "POST":
+        albums = Album.objects.all()
+        for i in range(len(albums)-1, -1, -1):
+            album = albums[i]
+            album.delete()
+
         profile.delete()
         return redirect('home_page')
 
