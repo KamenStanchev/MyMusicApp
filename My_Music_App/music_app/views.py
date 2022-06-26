@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from My_Music_App.music_app.forms import ProfileForm
-from My_Music_App.music_app.models import Profile
+from My_Music_App.music_app.forms import ProfileForm, AlbumForm
+from My_Music_App.music_app.models import Profile, Album
 
 
 def get_profile():
@@ -14,7 +14,11 @@ def get_profile():
 def home_page(request):
     profile = get_profile()
     if profile:
-        return render(request, 'home-with-profile.html')
+        albums = Album.objects.all()
+        context = {
+            'albums': albums,
+        }
+        return render(request, 'home-with-profile.html', context)
     else:
         if request.method == 'POST':
             form = ProfileForm(request.POST)
@@ -31,19 +35,57 @@ def home_page(request):
 
 
 def add_album(request):
-    pass
+    if request.method == 'POST':
+        form = AlbumForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home_page')
+    else:
+        form = AlbumForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'add-album.html', context)
 
 
-def album_details(request):
-    pass
+def album_details(request, id):
+    album = Album.objects.get(id=id)
+    context = {
+        'album': album,
+    }
+    return render(request, 'album-details.html', context)
 
 
-def edit_album(request):
-    pass
+def edit_album(request, id):
+    album = Album.objects.get(id=id)
+    if request.method == 'POST':
+        form = AlbumForm(request.POST, instance=album)
+        if form.is_valid():
+            form.save()
+            return redirect('home_page')
+    else:
+        form = AlbumForm(instance=album)
+    context = {
+        'form': form,
+        'id': id,
+    }
+    return render(request, 'edit-album.html', context)
 
 
-def delete_album(request):
-    pass
+def delete_album(request, id):
+    album = Album.objects.get(id=id)
+    form = AlbumForm(instance=album)
+    for field in form.fields:
+        form.fields[field].disabled = True
+    if request.method == 'POST':
+        album.delete()
+        return redirect('home_page')
+    context = {
+        'form': form,
+        'id': id,
+
+    }
+    return render(request, 'delete-album.html', context)
 
 
 def profile_details(request):

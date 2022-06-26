@@ -26,42 +26,43 @@ class Profile(models.Model):
     )
 
 
-# class Album(models.Model):
-#     name = models.CharField(
-#         'Album Name',
-#         unique=True,
-#         max_length=30,
-#     )
-#
-#     artist = models.CharField(
-#         'Artist',
-#         max_length=30,
-#     )
-#
-#     genre = models.CharField(
-#         'Genre',
-#         max_length=30,
-#         choices=[("Pop Music", "Pop Music"), ("Jazz Music", "Jazz Music"),
-#                  ("R&B Music", "R&B Music"), ("Rock Music", "Rock Music"),
-#                  ("Country Music", "Country Music"), ("Dance Music", "Country Music"),
-#                  ("Hip Hop Music", "Hip Hop Music"), ("Other", "Other")
-#                  ]
-#     )
-#
-#     description = models.TextField(
-#         'Description',
-#         null=True,
-#         blank=True
-#     )
-#
-#     image = models.URLField(
-#         'Image URL',
-#     )
-#
-#     price = models.FloatField(
-#         'Price',
-#         validators=(
-#             positive_float_validator,
-#         )
-#
-#     )
+class Album(models.Model):
+    name = models.CharField(
+        'Album Name',
+        unique=True,
+        max_length=30,
+    )
+
+    artist = models.CharField(
+        'Artist',
+        max_length=30,
+    )
+
+    genre = models.CharField(
+        'Genre',
+        max_length=30,
+        choices=[("Pop Music", "Pop Music"), ("Jazz Music", "Jazz Music"),
+                 ("R&B Music", "R&B Music"), ("Rock Music", "Rock Music"),
+                 ("Country Music", "Country Music"), ("Dance Music", "Country Music"),
+                 ("Hip Hop Music", "Hip Hop Music"), ("Other", "Other")
+                 ]
+    )
+
+    description = models.TextField(
+        'Description',
+        null=True,
+        blank=True
+    )
+
+    image = models.URLField(
+        'Image URL',
+        max_length=400,
+    )
+
+    price = models.FloatField(
+        'Price',
+        validators=(
+            positive_float_validator,
+        )
+
+    )
