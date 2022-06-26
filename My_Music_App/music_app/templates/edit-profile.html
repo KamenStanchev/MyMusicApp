@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block page_content %}
+<section class="editPage">
+    <form method="post" action="{% url 'edit_profile' %}">
+        <fieldset>
+            <legend>Edit Profile</legend>
+            <img src="{{ profile.image }}" width="200"
+                 alt="Profile Image">
+            <div class="container">
+                {% csrf_token %}
+                {{ form }}
+
+                <button class="edit-album" type="submit">Edit Profile</button>
+            </div>
+        </fieldset>
+    </form>
+</section>
+{% endblock %}

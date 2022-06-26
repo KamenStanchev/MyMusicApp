@@ -5,6 +5,14 @@ from My_Music_App.validators import username_validator, positive_float_validator
 
 
 class Profile(models.Model):
+    image = models.URLField(
+        'Profile image',
+        max_length=400,
+        # default='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+        null=True,
+        blank=True
+    )
+
     username = models.CharField(
         'Username',
         max_length=15,

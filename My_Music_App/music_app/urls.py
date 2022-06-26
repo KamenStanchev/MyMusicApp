@@ -12,4 +12,5 @@ urlpatterns = [
 
     path('profile/details/', profile_details, name='profile_details'),
     path('profile/delete/', delete_profile, name='delete_profile'),
+    path('profile/edit/', edit_profile, name='edit_profile'),
 ]

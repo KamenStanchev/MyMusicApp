@@ -15,11 +15,11 @@
     <header>
         <nav>
             <img src="/My_Music_App/static/images/headphones.png" alt="headphones">
-            <a href="#">Home</a><ul></ul>
+            <a href="{% url 'home_page' %}">Home</a><ul></ul>
             <ul>
                 <!--Only for user with created profile-->
                 <li><a href="{% url 'add_album' %}">Create Album</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="{% url 'profile_details' %}">Profile</a></li>
             </ul>
         </nav>
     </header>

@@ -23,7 +23,10 @@ def home_page(request):
         if request.method == 'POST':
             form = ProfileForm(request.POST)
             if form.is_valid():
-                form.save()
+                purchase = form.save(commit=False)
+                if purchase.image is None:
+                    purchase.image = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                purchase.save()
                 return redirect('home_page')
         else:
             form = ProfileForm()
@@ -89,8 +92,33 @@ def delete_album(request, id):
 
 
 def profile_details(request):
-    pass
+    profile = get_profile()
+    albums = Album.objects.all()
+    albums_count = len(albums)
+    context = {
+        'profile': profile,
+        'albums_count': albums_count,
+    }
+    return render(request, 'profile-details.html', context)
+
+
+def edit_profile(request):
+    profile = get_profile()
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_details')
+    else:
+        form = ProfileForm(instance=profile)
+    context = {'form': form, 'profile': profile}
+    return render(request, 'edit-profile.html', context)
 
 
 def delete_profile(request):
-    pass
+    profile = get_profile()
+    if request.method == "POST":
+        profile.delete()
+        return redirect('home_page')
+
+    return render(request, 'profile-delete.html')

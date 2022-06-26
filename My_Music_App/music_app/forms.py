@@ -6,9 +6,14 @@ from My_Music_App.music_app.models import Profile, Album
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('username', 'email', 'age')
+        fields = ('image','username', 'email', 'age')
 
         widgets = {
+            'image': forms.URLInput(
+                attrs={
+                    'placeholder': 'Input URL',
+                }
+            ),
             'username': forms.TextInput(
                 attrs={
                     'placeholder': 'Username'
